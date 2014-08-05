@@ -12,19 +12,15 @@ import org.junit.runners.model.InitializationError;
  * Created by shelajev on 05/08/14.
  */
 public class TimedIgnoreTestRunner extends BlockJUnit4ClassRunner {
-
-
   public TimedIgnoreTestRunner(Class<?> klass) throws InitializationError {
     super(klass);
   }
 
   @Override
   public void run(RunNotifier notifier) {
-
     //take all annotations and find if any of them is ignore that we should obey
     boolean ignoreTest = Arrays.stream(getTestClass().getAnnotations())
                            .anyMatch(a -> a instanceof Ignore && shouldIgnore(((Ignore) a).until()));
-
     if(ignoreTest) {
       notifier.fireTestIgnored(getDescription());
       return;
@@ -38,6 +34,4 @@ public class TimedIgnoreTestRunner extends BlockJUnit4ClassRunner {
     LocalDate date = LocalDate.parse(dateString, formatter);
     return date.isAfter(LocalDate.now());
   }
-
-
 }

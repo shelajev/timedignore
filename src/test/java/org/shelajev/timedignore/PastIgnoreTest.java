@@ -9,10 +9,11 @@ import org.junit.runner.RunWith;
 
 @RunWith(TimedIgnoreTestRunner.class)
 @Ignore(until = "10.12.1999")
-public class PastIgnore {
+public class PastIgnoreTest {
 
-  @Test
-  public void multiplicationOfZeroIntegersShouldReturnZero() {
-    //this test is supposed to pass
+  @Test(expected = RuntimeException.class)
+  public void ignoreHasPassed() {
+    throw new RuntimeException("This test runs");
   }
+
 }

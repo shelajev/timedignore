@@ -7,10 +7,10 @@ import static org.junit.Assert.fail;
 
 @RunWith(TimedIgnoreTestRunner.class)
 @Ignore(until = "10.12.2100")
-public class Ignored {
+public class IgnoredTest {
 
   @Test
-  public void underTimedIgnore() {
+  public void testUnderTimedIgnore() {
     fail("This test is expected to fail");
   }
 }
