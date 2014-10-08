@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.fail;
 
 @RunWith(TimedIgnoreTestRunner.class)
-@Ignore(until = "10.12.2100")
+@IgnoreUntil(until = "2100-12-10")
 public class IgnoredTest {
 
   @Test

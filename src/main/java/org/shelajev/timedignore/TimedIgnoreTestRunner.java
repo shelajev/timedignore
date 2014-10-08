@@ -18,20 +18,22 @@ public class TimedIgnoreTestRunner extends BlockJUnit4ClassRunner {
 
   @Override
   public void run(RunNotifier notifier) {
-    //take all annotations and find if any of them is ignore that we should obey
-    boolean ignoreTest = Arrays.stream(getTestClass().getAnnotations())
-                           .anyMatch(a -> a instanceof Ignore && shouldIgnore(((Ignore) a).until()));
-    if(ignoreTest) {
+    IgnoreUntil ignoreUntil = getTestClass().getJavaClass().getAnnotation(IgnoreUntil.class);
+
+    if(shouldIgnore(ignoreUntil)) {
       notifier.fireTestIgnored(getDescription());
       return;
     }
     super.run(notifier);
   }
 
-  boolean shouldIgnore(String dateString) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+  boolean shouldIgnore(IgnoreUntil ignoreUntil) {
+    if(ignoreUntil == null) {
+      return false;
+    }
+    DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
     //how awesome Java 8 date and time api is? We don't have to deal with timezones. Pure joy!
-    LocalDate date = LocalDate.parse(dateString, formatter);
+    LocalDate date = LocalDate.parse(ignoreUntil.until(), formatter);
     return date.isAfter(LocalDate.now());
   }
 }
